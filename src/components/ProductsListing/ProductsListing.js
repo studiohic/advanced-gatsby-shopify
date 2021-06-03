@@ -22,9 +22,12 @@ const PRODUCTS_LISTING_QUERY = graphql`
             id
             localFile {
               childImageSharp {
-                fluid(maxWidth: 400, maxHeight: 400) {
-                  ...GatsbyImageSharpFluid_withWebp
-                }
+                gatsbyImageData(
+                  width: 400
+                  height: 400
+                  placeholder: BLURRED
+                  layout: CONSTRAINED
+                )
               }
             }
           }

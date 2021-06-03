@@ -1,6 +1,6 @@
 import React from "react"
 import { graphql } from "gatsby"
-import Image from "gatsby-image"
+import { GatsbyImage } from "gatsby-plugin-image"
 import Layout from "../components/layout"
 import AddToCart from "../components/Cart/AddToCart"
 
@@ -14,11 +14,14 @@ const ProductDetailTemplate = ({ data }) => {
     <Layout>
       <div className="columns">
         <div className="column">
-          <Image fluid={firstImage.localFile.childImageSharp.fluid} />
+          <GatsbyImage
+            image={firstImage.localFile.childImageSharp.gatsbyImageData}
+          />
         </div>
         <div className="column">
           <h1 className="title">{product.title}</h1>
-          <p className="subtitle is-4">${firstVariant.price}</p>
+          <p className="subtitle price is-4">${firstVariant.price}</p>
+          <p className="description">{product.description}</p>
           <AddToCart />
         </div>
       </div>
@@ -34,6 +37,7 @@ export const query = graphql`
       id
       handle
       title
+      description
       productType
       variants {
         id
@@ -46,9 +50,7 @@ export const query = graphql`
         id
         localFile {
           childImageSharp {
-            fluid(maxWidth: 400, maxHeight: 400) {
-              ...GatsbyImageSharpFluid_withWebp
-            }
+            gatsbyImageData(width: 400, height: 400, layout: CONSTRAINED)
           }
         }
       }
